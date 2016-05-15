@@ -4,13 +4,14 @@
 #
 Name     : caffe
 Version  : c3
-Release  : 1
+Release  : 2
 URL      : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Source0  : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause
 Requires: caffe-bin
+Requires: caffe-python
 Requires: caffe-lib
 Requires: caffe-data
 BuildRequires : boost-dev
@@ -71,6 +72,14 @@ Requires: caffe-data
 lib components for the caffe package.
 
 
+%package python
+Summary: python components for the caffe package.
+Group: Default
+
+%description python
+python components for the caffe package.
+
+
 %prep
 %setup -q -n caffe-rc3
 %patch1 -p1
@@ -87,69 +96,15 @@ rm -rf %{buildroot}
 pushd clr-build
 %make_install
 popd
+## make_install_append content
+mkdir -p %{buildroot}/usr/lib64
+mv %{buildroot}/usr/lib/lib*so* %{buildroot}/usr/lib64
+mkdir -p %{buildroot}/usr/lib/python2.7/site-packages/
+mv %{buildroot}/usr/python/* %{buildroot}/usr/lib/python2.7/site-packages/
+## make_install_append end
 
 %files
 %defattr(-,root,root,-)
-/usr/python/caffe/__init__.py
-/usr/python/caffe/__init__.pyc
-/usr/python/caffe/__init__.pyo
-/usr/python/caffe/_caffe.so
-/usr/python/caffe/classifier.py
-/usr/python/caffe/classifier.pyc
-/usr/python/caffe/classifier.pyo
-/usr/python/caffe/detector.py
-/usr/python/caffe/detector.pyc
-/usr/python/caffe/detector.pyo
-/usr/python/caffe/draw.py
-/usr/python/caffe/draw.pyc
-/usr/python/caffe/draw.pyo
-/usr/python/caffe/imagenet/ilsvrc_2012_mean.npy
-/usr/python/caffe/io.py
-/usr/python/caffe/io.pyc
-/usr/python/caffe/io.pyo
-/usr/python/caffe/net_spec.py
-/usr/python/caffe/net_spec.pyc
-/usr/python/caffe/net_spec.pyo
-/usr/python/caffe/proto/__init__.py
-/usr/python/caffe/proto/__init__.pyc
-/usr/python/caffe/proto/__init__.pyo
-/usr/python/caffe/proto/caffe_pb2.py
-/usr/python/caffe/proto/caffe_pb2.pyc
-/usr/python/caffe/proto/caffe_pb2.pyo
-/usr/python/caffe/pycaffe.py
-/usr/python/caffe/pycaffe.pyc
-/usr/python/caffe/pycaffe.pyo
-/usr/python/caffe/test/test_io.py
-/usr/python/caffe/test/test_io.pyc
-/usr/python/caffe/test/test_io.pyo
-/usr/python/caffe/test/test_layer_type_list.py
-/usr/python/caffe/test/test_layer_type_list.pyc
-/usr/python/caffe/test/test_layer_type_list.pyo
-/usr/python/caffe/test/test_net.py
-/usr/python/caffe/test/test_net.pyc
-/usr/python/caffe/test/test_net.pyo
-/usr/python/caffe/test/test_net_spec.py
-/usr/python/caffe/test/test_net_spec.pyc
-/usr/python/caffe/test/test_net_spec.pyo
-/usr/python/caffe/test/test_python_layer.py
-/usr/python/caffe/test/test_python_layer.pyc
-/usr/python/caffe/test/test_python_layer.pyo
-/usr/python/caffe/test/test_python_layer_with_param_str.py
-/usr/python/caffe/test/test_python_layer_with_param_str.pyc
-/usr/python/caffe/test/test_python_layer_with_param_str.pyo
-/usr/python/caffe/test/test_solver.py
-/usr/python/caffe/test/test_solver.pyc
-/usr/python/caffe/test/test_solver.pyo
-/usr/python/classify.py
-/usr/python/classify.pyc
-/usr/python/classify.pyo
-/usr/python/detect.py
-/usr/python/detect.pyc
-/usr/python/detect.pyo
-/usr/python/draw_net.py
-/usr/python/draw_net.pyc
-/usr/python/draw_net.pyo
-/usr/python/requirements.txt
 
 %files bin
 %defattr(-,root,root,-)
@@ -279,8 +234,12 @@ popd
 /usr/include/caffe/util/rng.hpp
 /usr/include/caffe/util/signal_handler.h
 /usr/include/caffe/util/upgrade_proto.hpp
-/usr/lib/*.so
+/usr/lib64/*.so
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib/*.so.*
+/usr/lib64/*.so.*
+
+%files python
+%defattr(-,root,root,-)
+/usr/lib/python*/*

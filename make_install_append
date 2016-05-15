@@ -1,0 +1,4 @@
+mkdir -p %{buildroot}/usr/lib64
+mv %{buildroot}/usr/lib/lib*so* %{buildroot}/usr/lib64
+mkdir -p %{buildroot}/usr/lib/python2.7/site-packages/
+mv %{buildroot}/usr/python/* %{buildroot}/usr/lib/python2.7/site-packages/
