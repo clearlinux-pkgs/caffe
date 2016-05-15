@@ -1,0 +1,14 @@
+# This file contains additional build requirements that did not get
+# picked up automatically. One name per line, no whitespace.
+protobuf-dev
+gflags-dev
+glog-dev
+hdf5-dev
+numpy
+scipy
+nose
+boost-dev
+h5py
+lmdb-dev
+openblas
+python-dev
