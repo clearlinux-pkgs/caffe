@@ -12,3 +12,7 @@ h5py
 lmdb-dev
 openblas
 python-dev
+doxygen
+opencv-dev
+leveldb-dev
+snappy-dev

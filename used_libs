@@ -7,9 +7,13 @@ libgflags.so.2
 libglog.so.0
 libhdf5.so.10
 libhdf5_hl.so.10
+libleveldb.so.1
 liblmdb.so
 libm.so.6
 libopenblas.so.0
+libopencv_core.so.3.1
+libopencv_imgcodecs.so.3.1
+libopencv_imgproc.so.3.1
 libprotobuf.so.10
 libpthread.so.0
 libpython2.7.so.1.0

@@ -4,7 +4,7 @@
 #
 Name     : caffe
 Version  : c3
-Release  : 2
+Release  : 3
 URL      : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Source0  : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Summary  : No detailed summary available
@@ -16,17 +16,21 @@ Requires: caffe-lib
 Requires: caffe-data
 BuildRequires : boost-dev
 BuildRequires : cmake
+BuildRequires : doxygen
 BuildRequires : gflags-dev
 BuildRequires : glog-dev
 BuildRequires : h5py
 BuildRequires : hdf5-dev
+BuildRequires : leveldb-dev
 BuildRequires : lmdb-dev
 BuildRequires : nose
 BuildRequires : numpy
 BuildRequires : openblas
+BuildRequires : opencv-dev
 BuildRequires : protobuf-dev
 BuildRequires : python-dev
 BuildRequires : scipy
+BuildRequires : snappy-dev
 Patch1: config.patch
 
 %description
@@ -87,7 +91,7 @@ python components for the caffe package.
 %build
 mkdir clr-build
 pushd clr-build
-cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=%{_libdir} -DUSE_LEVELDB=off -DUSE_OPENCV=off  -DBLAS=open
+cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=%{_libdir} -DUSE_LEVELDB=on -DUSE_OPENCV=on  -DBLAS=open
 make V=1  %{?_smp_mflags}
 popd
 

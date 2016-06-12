@@ -21,6 +21,7 @@ libcaffe.so.1.0.0-rc3:_ZN5caffe10caffe_powxIdEEviPKT_S1_PS1_
 libcaffe.so.1.0.0-rc3:_ZN5caffe10caffe_powxIfEEviPKT_S1_PS1_
 libcaffe.so.1.0.0-rc3:_ZN5caffe10caffe_scalIdEEviT_PS1_
 libcaffe.so.1.0.0-rc3:_ZN5caffe10caffe_scalIfEEviT_PS1_
+libcaffe.so.1.0.0-rc3:_ZN5caffe11DecodeDatumEPNS_5DatumEb
 libcaffe.so.1.0.0-rc3:_ZN5caffe11SolverState10SharedCtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe11SolverState10SharedDtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe11SolverState10descriptorEv
@@ -41,6 +42,7 @@ libcaffe.so.1.0.0-rc3:_ZN5caffe11SolverStateC2Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe11SolverStateD0Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe11SolverStateD1Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe11SolverStateD2Ev
+libcaffe.so.1.0.0-rc3:_ZN5caffe12CVMatToDatumERKN2cv3MatEPNS_5DatumE
 libcaffe.so.1.0.0-rc3:_ZN5caffe12ELUParameter10SharedCtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe12ELUParameter10SharedDtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe12ELUParameter10descriptorEv
@@ -684,6 +686,11 @@ libcaffe.so.1.0.0-rc3:_ZN5caffe16PoolingParameterC2Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe16PoolingParameterD0Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe16PoolingParameterD1Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe16PoolingParameterD2Ev
+libcaffe.so.1.0.0-rc3:_ZN5caffe16ReadImageToCVMatERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+libcaffe.so.1.0.0-rc3:_ZN5caffe16ReadImageToCVMatERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEb
+libcaffe.so.1.0.0-rc3:_ZN5caffe16ReadImageToCVMatERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEii
+libcaffe.so.1.0.0-rc3:_ZN5caffe16ReadImageToCVMatERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiib
+libcaffe.so.1.0.0-rc3:_ZN5caffe16ReadImageToDatumERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiiibS7_PNS_5DatumE
 libcaffe.so.1.0.0-rc3:_ZN5caffe16ReshapeParameter10SharedCtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe16ReshapeParameter10SharedDtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe16ReshapeParameter10descriptorEv
@@ -808,6 +815,7 @@ libcaffe.so.1.0.0-rc3:_ZN5caffe17AccuracyParameterC2Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe17AccuracyParameterD0Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe17AccuracyParameterD1Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe17AccuracyParameterD2Ev
+libcaffe.so.1.0.0-rc3:_ZN5caffe17DecodeDatumNativeEPNS_5DatumE
 libcaffe.so.1.0.0-rc3:_ZN5caffe17HDF5DataParameter10SharedCtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe17HDF5DataParameter10SharedDtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe17HDF5DataParameter10descriptorEv
@@ -849,6 +857,7 @@ libcaffe.so.1.0.0-rc3:_ZN5caffe18BatchNormParameterC2Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe18BatchNormParameterD0Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe18BatchNormParameterD1Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe18BatchNormParameterD2Ev
+libcaffe.so.1.0.0-rc3:_ZN5caffe18DecodeDatumToCVMatERKNS_5DatumEb
 libcaffe.so.1.0.0-rc3:_ZN5caffe18DummyDataParameter10SharedCtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe18DummyDataParameter10SharedDtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe18DummyDataParameter10descriptorEv
@@ -1134,6 +1143,7 @@ libcaffe.so.1.0.0-rc3:_ZN5caffe24ContrastiveLossParameterD0Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe24ContrastiveLossParameterD1Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe24ContrastiveLossParameterD2Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe24DataParameter_DB_IsValidEi
+libcaffe.so.1.0.0-rc3:_ZN5caffe24DecodeDatumToCVMatNativeERKNS_5DatumE
 libcaffe.so.1.0.0-rc3:_ZN5caffe27DataParameter_DB_descriptorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe27LRNParameter_Engine_IsValidEi
 libcaffe.so.1.0.0-rc3:_ZN5caffe27SPPParameter_Engine_IsValidEi
@@ -1146,6 +1156,7 @@ libcaffe.so.1.0.0-rc3:_ZN5caffe2db4LMDB4OpenERKNSt7__cxx1112basic_stringIcSt11ch
 libcaffe.so.1.0.0-rc3:_ZN5caffe2db4LMDB9NewCursorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe2db5GetDBENS_16DataParameter_DBE
 libcaffe.so.1.0.0-rc3:_ZN5caffe2db5GetDBERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+libcaffe.so.1.0.0-rc3:_ZN5caffe2db7LevelDB4OpenERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_4ModeE
 libcaffe.so.1.0.0-rc3:_ZN5caffe30LRNParameter_Engine_descriptorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe30ParamSpec_DimCheckMode_IsValidEi
 libcaffe.so.1.0.0-rc3:_ZN5caffe30ReadNetParamsFromTextFileOrDieERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS_12NetParameterE
