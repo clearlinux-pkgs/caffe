@@ -4,7 +4,7 @@
 #
 Name     : caffe
 Version  : c3
-Release  : 4
+Release  : 5
 URL      : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Source0  : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Summary  : No detailed summary available
@@ -32,6 +32,12 @@ BuildRequires : python-dev
 BuildRequires : scipy
 BuildRequires : snappy-dev
 Patch1: config.patch
+Patch2: 0001-add-InputLayer-for-Net-input.patch
+Patch3: 0002-deprecate-input-fields-and-upgrade-automagically.patch
+Patch4: 0003-drop-Net-inputs-Forward-with-bottoms.patch
+Patch5: 0004-collect-Net-inputs-from-Input-layers.patch
+Patch6: 0005-examples-switch-examples-models-to-Input-layers.patch
+Patch7: 0006-Deprecate-ForwardPrefilled-Forward-bottom-loss-in-li.patch
 
 %description
 # Caffe
@@ -87,8 +93,15 @@ python components for the caffe package.
 %prep
 %setup -q -n caffe-rc3
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
+export LANG=C
 mkdir clr-build
 pushd clr-build
 cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=%{_libdir} -DUSE_LEVELDB=on -DUSE_OPENCV=on  -DBLAS=open
@@ -184,6 +197,7 @@ mv %{buildroot}/usr/python/* %{buildroot}/usr/lib/python2.7/site-packages/
 /usr/include/caffe/layers/image_data_layer.hpp
 /usr/include/caffe/layers/infogain_loss_layer.hpp
 /usr/include/caffe/layers/inner_product_layer.hpp
+/usr/include/caffe/layers/input_layer.hpp
 /usr/include/caffe/layers/log_layer.hpp
 /usr/include/caffe/layers/loss_layer.hpp
 /usr/include/caffe/layers/lrn_layer.hpp
