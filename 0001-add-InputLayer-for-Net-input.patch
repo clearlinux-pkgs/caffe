@@ -1,0 +1,145 @@
+From 00598ca84e2611cf3bbd363d4920796ce1517ff2 Mon Sep 17 00:00:00 2001
+From: Evan Shelhamer <shelhamer@imaginarynumber.net>
+Date: Fri, 16 Oct 2015 16:44:23 -0700
+Subject: [PATCH 1/6] add InputLayer for Net input
+
+Create an input layer to replace oddball Net `input` fields.
+---
+ include/caffe/layers/input_layer.hpp | 44 ++++++++++++++++++++++++++++++++++++
+ src/caffe/layers/input_layer.cpp     | 27 ++++++++++++++++++++++
+ src/caffe/proto/caffe.proto          | 13 +++++++++--
+ 3 files changed, 82 insertions(+), 2 deletions(-)
+ create mode 100644 include/caffe/layers/input_layer.hpp
+ create mode 100644 src/caffe/layers/input_layer.cpp
+
+diff --git a/include/caffe/layers/input_layer.hpp b/include/caffe/layers/input_layer.hpp
+new file mode 100644
+index 0000000..f447267
+--- /dev/null
++++ b/include/caffe/layers/input_layer.hpp
+@@ -0,0 +1,44 @@
++#ifndef CAFFE_INPUT_LAYER_HPP_
++#define CAFFE_INPUT_LAYER_HPP_
++
++#include <vector>
++
++#include "caffe/blob.hpp"
++#include "caffe/layer.hpp"
++#include "caffe/proto/caffe.pb.h"
++
++namespace caffe {
++
++/**
++ * @brief Provides data to the Net by assigning tops directly.
++ *
++ * This data layer is a container that merely holds the data assigned to it;
++ * forward, backward, and reshape are all no-ops.
++ */
++template <typename Dtype>
++class InputLayer : public Layer<Dtype> {
++ public:
++  explicit InputLayer(const LayerParameter& param)
++      : Layer<Dtype>(param) {}
++  virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
++      const vector<Blob<Dtype>*>& top);
++  // Data layers should be shared by multiple solvers in parallel
++  virtual inline bool ShareInParallel() const { return true; }
++  // Data layers have no bottoms, so reshaping is trivial.
++  virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
++      const vector<Blob<Dtype>*>& top) {}
++
++  virtual inline const char* type() const { return "Input"; }
++  virtual inline int ExactNumBottomBlobs() const { return 0; }
++  virtual inline int MinTopBlobs() const { return 1; }
++
++ protected:
++  virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
++      const vector<Blob<Dtype>*>& top) {}
++  virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
++      const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom) {}
++};
++
++}  // namespace caffe
++
++#endif  // CAFFE_INPUT_LAYER_HPP_
+diff --git a/src/caffe/layers/input_layer.cpp b/src/caffe/layers/input_layer.cpp
+new file mode 100644
+index 0000000..667d8ad
+--- /dev/null
++++ b/src/caffe/layers/input_layer.cpp
+@@ -0,0 +1,27 @@
++#include <vector>
++
++#include "caffe/layers/input_layer.hpp"
++
++namespace caffe {
++
++template <typename Dtype>
++void InputLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
++      const vector<Blob<Dtype>*>& top) {
++  const int num_top = top.size();
++  const InputParameter& param = this->layer_param_.input_param();
++  const int num_shape = param.shape_size();
++  CHECK(num_shape == 0 || num_shape == 1 || num_shape == num_top)
++      << "Must specify 'shape' once, once per top blob, or not at all: "
++      << num_top << " tops vs. " << num_shape << " shapes.";
++  if (num_shape > 0) {
++    for (int i = 0; i < num_top; ++i) {
++      const int shape_index = (param.shape_size() == 1) ? 0 : i;
++      top[i]->Reshape(param.shape(shape_index));
++    }
++  }
++}
++
++INSTANTIATE_CLASS(InputLayer);
++REGISTER_LAYER_CLASS(Input);
++
++}  // namespace caffe
+diff --git a/src/caffe/proto/caffe.proto b/src/caffe/proto/caffe.proto
+index 7edb6ae..702ce6b 100644
+--- a/src/caffe/proto/caffe.proto
++++ b/src/caffe/proto/caffe.proto
+@@ -306,7 +306,7 @@ message ParamSpec {
+ // NOTE
+ // Update the next available ID when you add a new LayerParameter field.
+ //
+-// LayerParameter next available layer-specific ID: 143 (last added: scale_param)
++// LayerParameter next available layer-specific ID: 144 (last added: input_param)
+ message LayerParameter {
+   optional string name = 1; // the layer name
+   optional string type = 2; // the layer type
+@@ -374,6 +374,7 @@ message LayerParameter {
+   optional ImageDataParameter image_data_param = 115;
+   optional InfogainLossParameter infogain_loss_param = 116;
+   optional InnerProductParameter inner_product_param = 117;
++  optional InputParameter input_param = 143;
+   optional LogParameter log_param = 134;
+   optional LRNParameter lrn_param = 118;
+   optional MemoryDataParameter memory_data_param = 119;
+@@ -431,7 +432,7 @@ message LossParameter {
+     // Outputs that receive the ignore label will NOT be ignored in computing
+     // the normalization factor.
+     FULL = 0;
+-    // Divide by the total number of output locations that do not take the 
++    // Divide by the total number of output locations that do not take the
+     // ignore_label.  If ignore_label is not set, this behaves like FULL.
+     VALID = 1;
+     // Divide by the batch size.
+@@ -793,6 +794,14 @@ message InnerProductParameter {
+   optional bool transpose = 6 [default = false];
+ }
+ 
++message InputParameter {
++  // This layer produces N >= 1 top blob(s) to be assigned manually.
++  // Define N shapes to set a shape for each top.
++  // Define 1 shape to set the same shape for every top.
++  // Define no shape to defer to reshaping manually.
++  repeated BlobShape shape = 1;
++}
++
+ // Message that stores parameters used by LogLayer
+ message LogParameter {
+   // LogLayer computes outputs y = log_base(shift + scale * x), for base > 0.
+-- 
+2.9.0
+

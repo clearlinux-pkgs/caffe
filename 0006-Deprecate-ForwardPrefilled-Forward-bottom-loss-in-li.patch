@@ -1,0 +1,65 @@
+From f88073aad81d8119dc9d62f882b8cb6d20c3b7ee Mon Sep 17 00:00:00 2001
+From: Evan Shelhamer <shelhamer@imaginarynumber.net>
+Date: Fri, 26 Feb 2016 22:20:50 -0800
+Subject: [PATCH 6/6] Deprecate ForwardPrefilled(), Forward(bottom, loss) in
+ lieu of dropping
+
+Relax removal of `Forward()` variations by deprecating instead.
+---
+ include/caffe/net.hpp |  9 +++++++++
+ src/caffe/net.cpp     | 12 ++++++++++++
+ 2 files changed, 21 insertions(+)
+
+diff --git a/include/caffe/net.hpp b/include/caffe/net.hpp
+index 1c2a191..0addb3c 100644
+--- a/include/caffe/net.hpp
++++ b/include/caffe/net.hpp
+@@ -36,6 +36,12 @@ class Net {
+    *
+    */
+   const vector<Blob<Dtype>*>& Forward(Dtype* loss = NULL);
++  /// @brief DEPRECATED; use Forward() instead.
++  const vector<Blob<Dtype>*>& ForwardPrefilled(Dtype* loss = NULL) {
++    LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: ForwardPrefilled() "
++        << "will be removed in a future version. Use Forward().";
++    return Forward(loss);
++  }
+ 
+   /**
+    * The From and To variants of Forward and Backward operate on the
+@@ -48,6 +54,9 @@ class Net {
+   Dtype ForwardFromTo(int start, int end);
+   Dtype ForwardFrom(int start);
+   Dtype ForwardTo(int end);
++  /// @brief DEPRECATED; set input blobs then use Forward() instead.
++  const vector<Blob<Dtype>*>& Forward(const vector<Blob<Dtype>* > & bottom,
++      Dtype* loss = NULL);
+ 
+   /**
+    * @brief Zeroes out the diffs of all net parameters.
+diff --git a/src/caffe/net.cpp b/src/caffe/net.cpp
+index c1760ea..23d94c9 100644
+--- a/src/caffe/net.cpp
++++ b/src/caffe/net.cpp
+@@ -567,6 +567,18 @@ const vector<Blob<Dtype>*>& Net<Dtype>::Forward(Dtype* loss) {
+ }
+ 
+ template <typename Dtype>
++const vector<Blob<Dtype>*>& Net<Dtype>::Forward(
++    const vector<Blob<Dtype>*> & bottom, Dtype* loss) {
++  LOG_EVERY_N(WARNING, 1000) << "DEPRECATED: Forward(bottom, loss) "
++      << "will be removed in a future version. Use Forward(loss).";
++  // Copy bottom to net bottoms
++  for (int i = 0; i < bottom.size(); ++i) {
++    net_input_blobs_[i]->CopyFrom(*bottom[i]);
++  }
++  return Forward(loss);
++}
++
++template <typename Dtype>
+ void Net<Dtype>::BackwardFromTo(int start, int end) {
+   CHECK_GE(end, 0);
+   CHECK_LT(start, layers_.size());
+-- 
+2.9.0
+
