@@ -1,1 +1,1 @@
--DUSE_LEVELDB=on -DUSE_OPENCV=on  -DBLAS=open
+-DUSE_LEVELDB=on -DUSE_OPENCV=on  -DBLAS=open -DCMAKE_AR=/usr/bin/gcc-ar -DCMAKE_RANLIB=/usr/bin/gcc-ranlib
