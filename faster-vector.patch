@@ -1,12 +1,12 @@
 --- caffe-rc3/include/caffe/util/mkl_alternate.hpp.org	2016-07-10 15:58:16.307061495 +0000
 +++ caffe-rc3/include/caffe/util/mkl_alternate.hpp	2016-07-10 16:05:01.872883757 +0000
-@@ -18,15 +18,15 @@
+@@ -18,15 +18,14 @@
  // be in the form e.g. y[i] = sqrt(a[i])
  #define DEFINE_VSL_UNARY_FUNC(name, operation) \
    template<typename Dtype> \
 -  void v##name(const int n, const Dtype* a, Dtype* y) { \
+-    CHECK_GT(n, 0); CHECK(a); CHECK(y); \
 +  void __attribute__((target_clones("arch=core-avx2","default"))) v##name(const int n, const Dtype* a, Dtype* y) { \
-     CHECK_GT(n, 0); CHECK(a); CHECK(y); \
      for (int i = 0; i < n; ++i) { operation; } \
    } \
 -  inline void vs##name( \
@@ -19,13 +19,21 @@
        const int n, const double* a, double* y) { \
      v##name<double>(n, a, y); \
    }
-@@ -59,16 +57,16 @@
+@@ -41,7 +40,6 @@
+ #define DEFINE_VSL_UNARY_FUNC_WITH_PARAM(name, operation) \
+   template<typename Dtype> \
+   void v##name(const int n, const Dtype* a, const Dtype b, Dtype* y) { \
+-    CHECK_GT(n, 0); CHECK(a); CHECK(y); \
+     for (int i = 0; i < n; ++i) { operation; } \
+   } \
+   inline void vs##name( \
+@@ -59,16 +57,15 @@
  // be in the form e.g. y[i] = a[i] + b[i]
  #define DEFINE_VSL_BINARY_FUNC(name, operation) \
    template<typename Dtype> \
 -  void v##name(const int n, const Dtype* a, const Dtype* b, Dtype* y) { \
+-    CHECK_GT(n, 0); CHECK(a); CHECK(b); CHECK(y); \
 +  void __attribute__((target_clones("arch=core-avx2","default"))) v##name(const int n, const Dtype* __restrict__ a, const Dtype* __restrict__ b, Dtype* __restrict__ y) { \
-     CHECK_GT(n, 0); CHECK(a); CHECK(b); CHECK(y); \
      for (int i = 0; i < n; ++i) { operation; } \
    } \
 -  inline void vs##name( \
@@ -40,4 +48,144 @@
 +      const int n, const double* __restrict__ a, const double* __restrict__ b, double* __restrict__ y) { \
      v##name<double>(n, a, b, y); \
    }
+ 
+--- caffe-rc3/src/caffe/util/math_functions.cpp.org	2016-07-10 17:07:19.893155505 +0000
++++ caffe-rc3/src/caffe/util/math_functions.cpp	2016-07-10 17:09:20.207004385 +0000
+@@ -69,14 +69,14 @@
+ template void caffe_set<double>(const int N, const double alpha, double* Y);
+ 
+ template <>
+-void caffe_add_scalar(const int N, const float alpha, float* Y) {
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_add_scalar(const int N, const float alpha, float* Y) {
+   for (int i = 0; i < N; ++i) {
+     Y[i] += alpha;
+   }
+ }
+ 
+ template <>
+-void caffe_add_scalar(const int N, const double alpha, double* Y) {
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_add_scalar(const int N, const double alpha, double* Y) {
+   for (int i = 0; i < N; ++i) {
+     Y[i] += alpha;
+   }
+@@ -127,102 +127,102 @@
+ }
+ 
+ template <>
+-void caffe_add<float>(const int n, const float* a, const float* b,
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_add<float>(const int n, const float* a, const float* b,
+     float* y) {
+   vsAdd(n, a, b, y);
+ }
+ 
+ template <>
+-void caffe_add<double>(const int n, const double* a, const double* b,
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_add<double>(const int n, const double* a, const double* b,
+     double* y) {
+   vdAdd(n, a, b, y);
+ }
+ 
+ template <>
+-void caffe_sub<float>(const int n, const float* a, const float* b,
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_sub<float>(const int n, const float* a, const float* b,
+     float* y) {
+   vsSub(n, a, b, y);
+ }
+ 
+ template <>
+-void caffe_sub<double>(const int n, const double* a, const double* b,
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_sub<double>(const int n, const double* a, const double* b,
+     double* y) {
+   vdSub(n, a, b, y);
+ }
+ 
+ template <>
+-void caffe_mul<float>(const int n, const float* a, const float* b,
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_mul<float>(const int n, const float* a, const float* b,
+     float* y) {
+   vsMul(n, a, b, y);
+ }
+ 
+ template <>
+-void caffe_mul<double>(const int n, const double* a, const double* b,
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_mul<double>(const int n, const double* a, const double* b,
+     double* y) {
+   vdMul(n, a, b, y);
+ }
+ 
+ template <>
+-void caffe_div<float>(const int n, const float* a, const float* b,
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_div<float>(const int n, const float* a, const float* b,
+     float* y) {
+   vsDiv(n, a, b, y);
+ }
+ 
+ template <>
+-void caffe_div<double>(const int n, const double* a, const double* b,
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_div<double>(const int n, const double* a, const double* b,
+     double* y) {
+   vdDiv(n, a, b, y);
+ }
+ 
+ template <>
+-void caffe_powx<float>(const int n, const float* a, const float b,
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_powx<float>(const int n, const float* a, const float b,
+     float* y) {
+   vsPowx(n, a, b, y);
+ }
+ 
+ template <>
+-void caffe_powx<double>(const int n, const double* a, const double b,
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_powx<double>(const int n, const double* a, const double b,
+     double* y) {
+   vdPowx(n, a, b, y);
+ }
+ 
+ template <>
+-void caffe_sqr<float>(const int n, const float* a, float* y) {
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_sqr<float>(const int n, const float* a, float* y) {
+   vsSqr(n, a, y);
+ }
+ 
+ template <>
+-void caffe_sqr<double>(const int n, const double* a, double* y) {
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_sqr<double>(const int n, const double* a, double* y) {
+   vdSqr(n, a, y);
+ }
+ 
+ template <>
+-void caffe_exp<float>(const int n, const float* a, float* y) {
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_exp<float>(const int n, const float* a, float* y) {
+   vsExp(n, a, y);
+ }
+ 
+ template <>
+-void caffe_exp<double>(const int n, const double* a, double* y) {
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_exp<double>(const int n, const double* a, double* y) {
+   vdExp(n, a, y);
+ }
+ 
+ template <>
+-void caffe_log<float>(const int n, const float* a, float* y) {
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_log<float>(const int n, const float* a, float* y) {
+   vsLn(n, a, y);
+ }
+ 
+ template <>
+-void caffe_log<double>(const int n, const double* a, double* y) {
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_log<double>(const int n, const double* a, double* y) {
+   vdLn(n, a, y);
+ }
+ 
+ template <>
+-void caffe_abs<float>(const int n, const float* a, float* y) {
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_abs<float>(const int n, const float* a, float* y) {
+     vsAbs(n, a, y);
+ }
+ 
+ template <>
+-void caffe_abs<double>(const int n, const double* a, double* y) {
++void __attribute__((target_clones("arch=core-avx2","default"))) caffe_abs<double>(const int n, const double* a, double* y) {
+     vdAbs(n, a, y);
+ }
  
