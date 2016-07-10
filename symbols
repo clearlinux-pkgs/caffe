@@ -214,6 +214,10 @@ libcaffe.so.1.0.0-rc3:_ZN5caffe12SyncedMemoryD1Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe12SyncedMemoryD2Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe12UpgradeV0NetERKNS_12NetParameterEPS0_
 libcaffe.so.1.0.0-rc3:_ZN5caffe12UpgradeV1NetERKNS_12NetParameterEPS0_
+libcaffe.so.1.0.0-rc3:_ZN5caffe12caffe_add_toIdEEviPT_PKS1_
+libcaffe.so.1.0.0-rc3:_ZN5caffe12caffe_add_toIfEEviPT_PKS1_
+libcaffe.so.1.0.0-rc3:_ZN5caffe12caffe_mul_toIdEEviPT_PKS1_
+libcaffe.so.1.0.0-rc3:_ZN5caffe12caffe_mul_toIfEEviPT_PKS1_
 libcaffe.so.1.0.0-rc3:_ZN5caffe13BiasParameter10SharedCtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe13BiasParameter10SharedDtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe13BiasParameter10descriptorEv
