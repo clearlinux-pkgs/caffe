@@ -5,3 +5,4 @@ config.patch
 0004-collect-Net-inputs-from-Input-layers.patch
 0005-examples-switch-examples-models-to-Input-layers.patch
 0006-Deprecate-ForwardPrefilled-Forward-bottom-loss-in-li.patch
+faster-vector.patch

@@ -4,7 +4,7 @@
 #
 Name     : caffe
 Version  : c3
-Release  : 7
+Release  : 8
 URL      : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Source0  : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Summary  : No detailed summary available
@@ -38,6 +38,7 @@ Patch4: 0003-drop-Net-inputs-Forward-with-bottoms.patch
 Patch5: 0004-collect-Net-inputs-from-Input-layers.patch
 Patch6: 0005-examples-switch-examples-models-to-Input-layers.patch
 Patch7: 0006-Deprecate-ForwardPrefilled-Forward-bottom-loss-in-li.patch
+Patch8: faster-vector.patch
 
 %description
 # Caffe
@@ -99,13 +100,14 @@ python components for the caffe package.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
 export LANG=C
 mkdir clr-build
 pushd clr-build
-cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=%{_libdir} -DUSE_LEVELDB=on -DUSE_OPENCV=on  -DBLAS=open
-make V=1  %{?_smp_mflags}
+cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=%{_libdir} -DCMAKE_AR=/usr/bin/gcc-ar -DCMAKE_RANLIB=/usr/bin/gcc-ranlib -DUSE_LEVELDB=on -DUSE_OPENCV=on  -DBLAS=open
+make VERBOSE=1  %{?_smp_mflags}
 popd
 
 %install
