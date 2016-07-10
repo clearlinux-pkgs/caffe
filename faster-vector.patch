@@ -5,8 +5,8 @@
  #define DEFINE_VSL_UNARY_FUNC(name, operation) \
    template<typename Dtype> \
 -  void v##name(const int n, const Dtype* a, Dtype* y) { \
-     CHECK_GT(n, 0); CHECK(a); CHECK(y); \
 +  void __attribute__((target_clones("arch=core-avx2","default"))) v##name(const int n, const Dtype* a, Dtype* y) { \
+     CHECK_GT(n, 0); CHECK(a); CHECK(y); \
      for (int i = 0; i < n; ++i) { operation; } \
    } \
 -  inline void vs##name( \
@@ -24,8 +24,8 @@
  #define DEFINE_VSL_BINARY_FUNC(name, operation) \
    template<typename Dtype> \
 -  void v##name(const int n, const Dtype* a, const Dtype* b, Dtype* y) { \
-     CHECK_GT(n, 0); CHECK(a); CHECK(b); CHECK(y); \
 +  void __attribute__((target_clones("arch=core-avx2","default"))) v##name(const int n, const Dtype* __restrict__ a, const Dtype* __restrict__ b, Dtype* __restrict__ y) { \
+     CHECK_GT(n, 0); CHECK(a); CHECK(b); CHECK(y); \
      for (int i = 0; i < n; ++i) { operation; } \
    } \
 -  inline void vs##name( \
