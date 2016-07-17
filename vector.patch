@@ -1,3 +1,6 @@
+Some minor code tweak to work around limits in the auto-vectorizer
+
+
 diff --git a/src/caffe/layers/relu_layer.cpp b/src/caffe/layers/relu_layer.cpp
 index 92a729c..6a966f8 100644
 --- a/src/caffe/layers/relu_layer.cpp

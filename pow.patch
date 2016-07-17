@@ -1,0 +1,15 @@
+1^Y = 1, and it turns out, 1 is a very common value, so it's worth special casing
+to avoid the PLT function call.
+
+
+--- caffe-rc3/include/caffe/util/mkl_alternate.hpp~	2016-07-10 16:05:01.000000000 +0000
++++ caffe-rc3/include/caffe/util/mkl_alternate.hpp	2016-07-17 16:16:28.685737313 +0000
+@@ -53,7 +53,7 @@
+     v##name<double>(n, a, b, y); \
+   }
+ 
+-DEFINE_VSL_UNARY_FUNC_WITH_PARAM(Powx, y[i] = pow(a[i], b));
++DEFINE_VSL_UNARY_FUNC_WITH_PARAM(Powx, if (a[i] != 1) y[i] = pow(a[i], b); else y[i] = 1;);
+ 
+ // A simple way to define the vsl binary functions. The operation should
+ // be in the form e.g. y[i] = a[i] + b[i]

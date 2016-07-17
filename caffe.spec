@@ -4,7 +4,7 @@
 #
 Name     : caffe
 Version  : c3
-Release  : 16
+Release  : 17
 URL      : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Source0  : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Summary  : No detailed summary available
@@ -40,6 +40,7 @@ Patch6: 0005-examples-switch-examples-models-to-Input-layers.patch
 Patch7: 0006-Deprecate-ForwardPrefilled-Forward-bottom-loss-in-li.patch
 Patch8: faster-vector.patch
 Patch9: vector.patch
+Patch10: pow.patch
 
 %description
 # Caffe
@@ -103,6 +104,7 @@ python components for the caffe package.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 %build
 export LANG=C
