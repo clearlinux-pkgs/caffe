@@ -315,3 +315,11 @@ index 71c0227..4f92d94 100644
  void caffe_powx<float>(const int n, const float* a, const float b,
      float* y) {
    vsPowx(n, a, b, y);
+--- caffe-rc3/src/caffe/util/math_functions.cpp~	2016-07-16 23:21:35.000000000 +0000
++++ caffe-rc3/src/caffe/util/math_functions.cpp	2016-07-19 15:26:36.439994531 +0000
+@@ -1,3 +1,5 @@
++#pragma GCC target("avx2")
++#pragma GCC optimize("O3")
+ #include <boost/math/special_functions/next.hpp>
+ #include <boost/random.hpp>
+ 
