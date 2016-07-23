@@ -323,3 +323,18 @@ index 71c0227..4f92d94 100644
  #include <boost/math/special_functions/next.hpp>
  #include <boost/random.hpp>
  
+--- caffe-rc3/src/caffe/layers/lrn_layer.cpp~	2016-01-30 03:02:45.000000000 +0000
++++ caffe-rc3/src/caffe/layers/lrn_layer.cpp	2016-07-23 14:54:46.391622096 +0000
+@@ -205,10 +205,9 @@
+     caffe_mul<Dtype>(channels_ * height_ * width_,
+         top_diff + block_offset, top_data + block_offset,
+         padded_ratio_data + padded_ratio.offset(0, inverse_pre_pad));
+-    caffe_div<Dtype>(channels_ * height_ * width_,
++    caffe_div_to<Dtype>(channels_ * height_ * width_,
+         padded_ratio_data + padded_ratio.offset(0, inverse_pre_pad),
+-        scale_data + block_offset,
+-        padded_ratio_data + padded_ratio.offset(0, inverse_pre_pad));
++        scale_data + block_offset);
+     // Now, compute the accumulated ratios and the bottom diff
+     caffe_set(accum_ratio.count(), Dtype(0), accum_ratio_data);
+     for (int c = 0; c < size_ - 1; ++c) {
