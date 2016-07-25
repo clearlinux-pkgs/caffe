@@ -24,7 +24,7 @@ index 114a86c..7dcc12a 100644
 +  const int output_w = (width + 2 * pad_w - ((kernel_w - 1) + 1)) + 1;
 +  const int channel_size = height * width;
 +  
-+  memset(data_col, 0, channel_size * sizeof(Dtype));
++  memset(data_col, 0, output_w * output_h * sizeof(Dtype));
 +  
 +  for (int channel = channels; channel--; data_im += channel_size) {
 +    for (int kernel_row = 0; kernel_row < kernel_h; kernel_row++) {
