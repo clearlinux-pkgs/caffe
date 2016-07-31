@@ -4,7 +4,7 @@
 #
 Name     : caffe
 Version  : c3
-Release  : 22
+Release  : 23
 URL      : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Source0  : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Summary  : No detailed summary available
