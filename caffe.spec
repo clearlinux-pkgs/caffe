@@ -4,7 +4,7 @@
 #
 Name     : caffe
 Version  : c3
-Release  : 23
+Release  : 24
 URL      : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Source0  : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Summary  : No detailed summary available
@@ -110,6 +110,10 @@ python components for the caffe package.
 export LANG=C
 mkdir clr-build
 pushd clr-build
+export CFLAGS="$CFLAGS -ffast-math -ftree-loop-vectorize "
+export FCFLAGS="$CFLAGS -ffast-math -ftree-loop-vectorize "
+export FFLAGS="$CFLAGS -ffast-math -ftree-loop-vectorize "
+export CXXFLAGS="$CXXFLAGS -ffast-math -ftree-loop-vectorize "
 cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=%{_libdir} -DCMAKE_AR=/usr/bin/gcc-ar -DCMAKE_RANLIB=/usr/bin/gcc-ranlib -DUSE_LEVELDB=on -DUSE_OPENCV=on  -DBLAS=open
 make VERBOSE=1  %{?_smp_mflags}
 popd

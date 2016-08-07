@@ -10,6 +10,7 @@ libhdf5_hl.so.10
 libleveldb.so.1
 liblmdb.so
 libm.so.6
+libmvec.so.1
 libopenblas.so.0
 libopencv_core.so.3.1
 libopencv_imgcodecs.so.3.1

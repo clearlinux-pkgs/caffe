@@ -9,7 +9,7 @@ to avoid the PLT function call.
    }
  
 -DEFINE_VSL_UNARY_FUNC_WITH_PARAM(Powx, y[i] = pow(a[i], b));
-+DEFINE_VSL_UNARY_FUNC_WITH_PARAM(Powx, if (a[i] != 1) y[i] = pow(a[i], b); else y[i] = 1;);
++DEFINE_VSL_UNARY_FUNC_WITH_PARAM(Powx, y[i] = powf(a[i], b));
  
  // A simple way to define the vsl binary functions. The operation should
  // be in the form e.g. y[i] = a[i] + b[i]
