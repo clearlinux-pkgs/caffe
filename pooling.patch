@@ -1,0 +1,36 @@
+--- caffe-rc3/src/caffe/layers/pooling_layer.cpp.orig	2016-08-08 01:11:32.431892561 +0000
++++ caffe-rc3/src/caffe/layers/pooling_layer.cpp	2016-08-08 01:13:32.265405910 +0000
+@@ -158,20 +158,26 @@
+             int wend = min(wstart + kernel_w_, width_);
+             hstart = max(hstart, 0);
+             wstart = max(wstart, 0);
++            Dtype maxval = -FLT_MAX;
++            int maxidx = -1;
+             const int pool_index = ph * pooled_width_ + pw;
+             for (int h = hstart; h < hend; ++h) {
+               for (int w = wstart; w < wend; ++w) {
+                 const int index = h * width_ + w;
+-                if (bottom_data[index] > top_data[pool_index]) {
+-                  top_data[pool_index] = bottom_data[index];
+-                  if (use_top_mask) {
+-                    top_mask[pool_index] = static_cast<Dtype>(index);
+-                  } else {
+-                    mask[pool_index] = index;
+-                  }
++                Dtype tmp = bottom_data[index];
++                if (tmp > maxval) {
++                  maxval = tmp;
++                  maxidx = index;
+                 }
+               }
+             }
++            top_data[pool_index] = maxval;
++            if (use_top_mask) {
++                top_mask[pool_index] = static_cast<Dtype>(maxidx);
++            } else {
++                mask[pool_index] = maxidx;
++            }
++            
+           }
+         }
+         // compute offset

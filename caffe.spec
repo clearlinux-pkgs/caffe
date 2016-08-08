@@ -4,7 +4,7 @@
 #
 Name     : caffe
 Version  : c3
-Release  : 24
+Release  : 25
 URL      : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Source0  : https://github.com/BVLC/caffe/archive/rc3.tar.gz
 Summary  : No detailed summary available
@@ -41,6 +41,7 @@ Patch7: 0006-Deprecate-ForwardPrefilled-Forward-bottom-loss-in-li.patch
 Patch8: faster-vector.patch
 Patch9: vector.patch
 Patch10: pow.patch
+Patch11: pooling.patch
 
 %description
 # Caffe
@@ -105,6 +106,7 @@ python components for the caffe package.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 %build
 export LANG=C

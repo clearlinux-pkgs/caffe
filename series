@@ -8,3 +8,4 @@ config.patch
 faster-vector.patch
 vector.patch
 pow.patch
+pooling.patch
