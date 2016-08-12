@@ -1,11 +1,1 @@
 config.patch
-0001-add-InputLayer-for-Net-input.patch
-0002-deprecate-input-fields-and-upgrade-automagically.patch
-0003-drop-Net-inputs-Forward-with-bottoms.patch
-0004-collect-Net-inputs-from-Input-layers.patch
-0005-examples-switch-examples-models-to-Input-layers.patch
-0006-Deprecate-ForwardPrefilled-Forward-bottom-loss-in-li.patch
-faster-vector.patch
-vector.patch
-pow.patch
-pooling.patch
