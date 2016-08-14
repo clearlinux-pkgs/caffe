@@ -1,5 +1,5 @@
 PKG_NAME := caffe
-URL := https://github.com/fenrus75/caffe/archive/a197a39703da9b866a3f68be0d63ea1b323c5c0b.tar.gz
+URL := https://github.com/fenrus75/caffe/archive/7d92d5c23d503af0565159b40c2d5155b5fdc3fb.tar.gz
 ARCHIVES :=
 
 include ../common/Makefile.common

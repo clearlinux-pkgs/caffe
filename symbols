@@ -239,6 +239,7 @@ libcaffe.so.1.0.0-rc3:_ZN5caffe12SyncedMemoryD1Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe12SyncedMemoryD2Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe12UpgradeV0NetERKNS_12NetParameterEPS0_
 libcaffe.so.1.0.0-rc3:_ZN5caffe12UpgradeV1NetERKNS_12NetParameterEPS0_
+libcaffe.so.1.0.0-rc3:_ZN5caffe12final_threadEPvi
 libcaffe.so.1.0.0-rc3:_ZN5caffe13BiasParameter10SharedCtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe13BiasParameter10SharedDtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe13BiasParameter10descriptorEv
@@ -543,6 +544,7 @@ libcaffe.so.1.0.0-rc3:_ZN5caffe14caffe_cpu_gemmIfEEv15CBLAS_TRANSPOSES1_iiiT_PKS
 libcaffe.so.1.0.0-rc3:_ZN5caffe14caffe_cpu_gemvIdEEv15CBLAS_TRANSPOSEiiT_PKS2_S4_S2_PS2_
 libcaffe.so.1.0.0-rc3:_ZN5caffe14caffe_cpu_gemvIfEEv15CBLAS_TRANSPOSEiiT_PKS2_S4_S2_PS2_
 libcaffe.so.1.0.0-rc3:_ZN5caffe14caffe_rng_randEv
+libcaffe.so.1.0.0-rc3:_ZN5caffe14pooling_threadEPvi
 libcaffe.so.1.0.0-rc3:_ZN5caffe15ArgMaxParameter10SharedCtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe15ArgMaxParameter10SharedDtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe15ArgMaxParameter10descriptorEv
@@ -666,6 +668,7 @@ libcaffe.so.1.0.0-rc3:_ZN5caffe15SolverParameterD0Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe15SolverParameterD1Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe15SolverParameterD2Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe15UpgradeNetInputEPNS_12NetParameterE
+libcaffe.so.1.0.0-rc3:_ZN5caffe15backward_threadEPvi
 libcaffe.so.1.0.0-rc3:_ZN5caffe15caffe_cpu_axpbyIdEEviT_PKS1_S1_PS1_
 libcaffe.so.1.0.0-rc3:_ZN5caffe15caffe_cpu_axpbyIfEEviT_PKS1_S1_PS1_
 libcaffe.so.1.0.0-rc3:_ZN5caffe15caffe_cpu_scaleIdEEviT_PKS1_PS1_
@@ -1136,6 +1139,7 @@ libcaffe.so.1.0.0-rc3:_ZN5caffe19WindowDataParameterC2Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe19WindowDataParameterD0Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe19WindowDataParameterD1Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe19WindowDataParameterD2Ev
+libcaffe.so.1.0.0-rc3:_ZN5caffe19conv_forward_threadEPvi
 libcaffe.so.1.0.0-rc3:_ZN5caffe20ConvolutionParameter10SharedCtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe20ConvolutionParameter10SharedDtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe20ConvolutionParameter10descriptorEv
@@ -1158,12 +1162,12 @@ libcaffe.so.1.0.0-rc3:_ZN5caffe20ConvolutionParameterD1Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe20ConvolutionParameterD2Ev
 libcaffe.so.1.0.0-rc3:_ZN5caffe20NetNeedsInputUpgradeERKNS_12NetParameterE
 libcaffe.so.1.0.0-rc3:_ZN5caffe20WriteProtoToTextFileERKN6google8protobuf7MessageEPKc
+libcaffe.so.1.0.0-rc3:_ZN5caffe20conv_backward_threadEPvi
 libcaffe.so.1.0.0-rc3:_ZN5caffe20hdf5_get_name_by_idxB5cxx11Eii
 libcaffe.so.1.0.0-rc3:_ZN5caffe20hdf5_load_nd_datasetIdEEviPKciiPNS_4BlobIT_EE
 libcaffe.so.1.0.0-rc3:_ZN5caffe20hdf5_load_nd_datasetIfEEviPKciiPNS_4BlobIT_EE
 libcaffe.so.1.0.0-rc3:_ZN5caffe20hdf5_save_nd_datasetIdEEviRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS_4BlobIT_EEb
 libcaffe.so.1.0.0-rc3:_ZN5caffe20hdf5_save_nd_datasetIfEEviRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKNS_4BlobIT_EEb
-libcaffe.so.1.0.0-rc3:_ZN5caffe20im2col_thread_workerEPvi
 libcaffe.so.1.0.0-rc3:_ZN5caffe21InfogainLossParameter10SharedCtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe21InfogainLossParameter10SharedDtorEv
 libcaffe.so.1.0.0-rc3:_ZN5caffe21InfogainLossParameter10descriptorEv
