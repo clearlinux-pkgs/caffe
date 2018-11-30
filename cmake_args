@@ -1,1 +1,1 @@
--DUSE_LEVELDB=on -DUSE_OPENCV=on  -DBLAS=open
+-DUSE_LEVELDB=on -DUSE_OPENCV=off  -DBLAS=open -DBUILD_python=off

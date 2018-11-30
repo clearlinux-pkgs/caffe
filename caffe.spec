@@ -4,20 +4,41 @@
 #
 Name     : caffe
 Version  : 7d92d5c23d503af0565159b40c2d5155b5fdc3fb
-Release  : 29
+Release  : 30
 URL      : https://github.com/fenrus75/caffe/archive/7d92d5c23d503af0565159b40c2d5155b5fdc3fb.tar.gz
 Source0  : https://github.com/fenrus75/caffe/archive/7d92d5c23d503af0565159b40c2d5155b5fdc3fb.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause
-Requires: caffe-bin
-Requires: caffe-python
-Requires: caffe-lib
-Requires: caffe-data
+Requires: caffe-bin = %{version}-%{release}
+Requires: caffe-data = %{version}-%{release}
+Requires: caffe-lib = %{version}-%{release}
+Requires: caffe-license = %{version}-%{release}
+Requires: caffe-python = %{version}-%{release}
+Requires: Cython
+Requires: Pillow
+Requires: PyYAML
+Requires: h5py
+Requires: ipython
+Requires: leveldb
+Requires: matplotlib
+Requires: networkx
+Requires: nose
+Requires: numpy
+Requires: pandas
+Requires: protobuf
+Requires: python-dateutil
+Requires: python-gflags
+Requires: scikit-image
+Requires: scipy
+Requires: six
+Requires: tornado
 BuildRequires : boost-dev
-BuildRequires : cmake
+BuildRequires : buildreq-cmake
 BuildRequires : doxygen
 BuildRequires : gflags-dev
+BuildRequires : git
+BuildRequires : glibc-dev
 BuildRequires : glog-dev
 BuildRequires : h5py
 BuildRequires : hdf5-dev
@@ -25,13 +46,17 @@ BuildRequires : leveldb-dev
 BuildRequires : lmdb-dev
 BuildRequires : nose
 BuildRequires : numpy
+BuildRequires : numpy-legacypython
 BuildRequires : openblas
 BuildRequires : opencv-dev
 BuildRequires : protobuf-dev
-BuildRequires : python-dev
+BuildRequires : python3
+BuildRequires : python3-dev
 BuildRequires : scipy
 BuildRequires : snappy-dev
+BuildRequires : zlib-dev
 Patch1: config.patch
+Patch2: py3.patch
 
 %description
 # Caffe
@@ -41,7 +66,8 @@ Patch1: config.patch
 %package bin
 Summary: bin components for the caffe package.
 Group: Binaries
-Requires: caffe-data
+Requires: caffe-data = %{version}-%{release}
+Requires: caffe-license = %{version}-%{release}
 
 %description bin
 bin components for the caffe package.
@@ -58,22 +84,40 @@ data components for the caffe package.
 %package dev
 Summary: dev components for the caffe package.
 Group: Development
-Requires: caffe-lib
-Requires: caffe-bin
-Requires: caffe-data
-Provides: caffe-devel
+Requires: caffe-lib = %{version}-%{release}
+Requires: caffe-bin = %{version}-%{release}
+Requires: caffe-data = %{version}-%{release}
+Provides: caffe-devel = %{version}-%{release}
 
 %description dev
 dev components for the caffe package.
 
 
+%package legacypython
+Summary: legacypython components for the caffe package.
+Group: Default
+Requires: python-core
+
+%description legacypython
+legacypython components for the caffe package.
+
+
 %package lib
 Summary: lib components for the caffe package.
 Group: Libraries
-Requires: caffe-data
+Requires: caffe-data = %{version}-%{release}
+Requires: caffe-license = %{version}-%{release}
 
 %description lib
 lib components for the caffe package.
+
+
+%package license
+Summary: license components for the caffe package.
+Group: Default
+
+%description license
+license components for the caffe package.
 
 
 %package python
@@ -87,30 +131,38 @@ python components for the caffe package.
 %prep
 %setup -q -n caffe-7d92d5c23d503af0565159b40c2d5155b5fdc3fb
 %patch1 -p1
+%patch2 -p1
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-mkdir clr-build
+export SOURCE_DATE_EPOCH=1543554341
+mkdir -p clr-build
 pushd clr-build
 export CFLAGS="$CFLAGS -ffast-math -ftree-loop-vectorize "
 export FCFLAGS="$CFLAGS -ffast-math -ftree-loop-vectorize "
 export FFLAGS="$CFLAGS -ffast-math -ftree-loop-vectorize "
 export CXXFLAGS="$CXXFLAGS -ffast-math -ftree-loop-vectorize "
-cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=%{_libdir} -DCMAKE_AR=/usr/bin/gcc-ar -DCMAKE_RANLIB=/usr/bin/gcc-ranlib -DUSE_LEVELDB=on -DUSE_OPENCV=on  -DBLAS=open
-make VERBOSE=1  %{?_smp_mflags}
+%cmake .. -DUSE_LEVELDB=on -DUSE_OPENCV=off  -DBLAS=open -DBUILD_python=off
+make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
+export SOURCE_DATE_EPOCH=1543554341
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/caffe
+cp LICENSE %{buildroot}/usr/share/package-licenses/caffe/LICENSE
 pushd clr-build
 %make_install
 popd
-## make_install_append content
+## install_append content
 mkdir -p %{buildroot}/usr/lib64
 mv %{buildroot}/usr/lib/lib*so* %{buildroot}/usr/lib64
 mkdir -p %{buildroot}/usr/lib/python2.7/site-packages/
 mv %{buildroot}/usr/python/* %{buildroot}/usr/lib/python2.7/site-packages/
-## make_install_append end
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -137,7 +189,7 @@ mv %{buildroot}/usr/python/* %{buildroot}/usr/lib/python2.7/site-packages/
 %files data
 %defattr(-,root,root,-)
 /usr/share/Caffe/CaffeConfig.cmake
-/usr/share/Caffe/CaffeTargets-release.cmake
+/usr/share/Caffe/CaffeTargets-relwithdebinfo.cmake
 /usr/share/Caffe/CaffeTargets.cmake
 
 %files dev
@@ -250,12 +302,19 @@ mv %{buildroot}/usr/python/* %{buildroot}/usr/lib/python2.7/site-packages/
 /usr/include/caffe/util/signal_handler.h
 /usr/include/caffe/util/threading.hpp
 /usr/include/caffe/util/upgrade_proto.hpp
-/usr/lib64/*.so
+/usr/lib64/libcaffe.so
+
+%files legacypython
+%defattr(-,root,root,-)
+/usr/lib/python2*/*
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libcaffe.so.1.0.0-rc3
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/caffe/LICENSE
 
 %files python
 %defattr(-,root,root,-)
-/usr/lib/python*/*

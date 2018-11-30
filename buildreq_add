@@ -11,8 +11,9 @@ boost-dev
 h5py
 lmdb-dev
 openblas
-python-dev
+python3-dev
 doxygen
 opencv-dev
 leveldb-dev
 snappy-dev
+numpy-legacypython
