@@ -4,7 +4,7 @@
 #
 Name     : caffe
 Version  : 7d92d5c23d503af0565159b40c2d5155b5fdc3fb
-Release  : 30
+Release  : 31
 URL      : https://github.com/fenrus75/caffe/archive/7d92d5c23d503af0565159b40c2d5155b5fdc3fb.tar.gz
 Source0  : https://github.com/fenrus75/caffe/archive/7d92d5c23d503af0565159b40c2d5155b5fdc3fb.tar.gz
 Summary  : No detailed summary available
@@ -138,9 +138,10 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1543554341
+export SOURCE_DATE_EPOCH=1551729511
 mkdir -p clr-build
 pushd clr-build
+export LDFLAGS="${LDFLAGS} -fno-lto"
 export CFLAGS="$CFLAGS -ffast-math -ftree-loop-vectorize "
 export FCFLAGS="$CFLAGS -ffast-math -ftree-loop-vectorize "
 export FFLAGS="$CFLAGS -ffast-math -ftree-loop-vectorize "
@@ -150,7 +151,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1543554341
+export SOURCE_DATE_EPOCH=1551729511
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/caffe
 cp LICENSE %{buildroot}/usr/share/package-licenses/caffe/LICENSE
