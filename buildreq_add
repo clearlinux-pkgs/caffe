@@ -16,4 +16,4 @@ doxygen
 opencv-dev
 leveldb-dev
 snappy-dev
-numpy-legacypython
+deprecated-numpy-legacypython
