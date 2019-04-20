@@ -4,7 +4,7 @@
 #
 Name     : caffe
 Version  : 7d92d5c23d503af0565159b40c2d5155b5fdc3fb
-Release  : 34
+Release  : 35
 URL      : https://github.com/fenrus75/caffe/archive/7d92d5c23d503af0565159b40c2d5155b5fdc3fb.tar.gz
 Source0  : https://github.com/fenrus75/caffe/archive/7d92d5c23d503af0565159b40c2d5155b5fdc3fb.tar.gz
 Summary  : A deep learning framework made with expression, speed, and modularity in mind (cpu only)
