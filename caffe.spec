@@ -4,10 +4,10 @@
 #
 Name     : caffe
 Version  : 7d92d5c23d503af0565159b40c2d5155b5fdc3fb
-Release  : 35
+Release  : 36
 URL      : https://github.com/fenrus75/caffe/archive/7d92d5c23d503af0565159b40c2d5155b5fdc3fb.tar.gz
 Source0  : https://github.com/fenrus75/caffe/archive/7d92d5c23d503af0565159b40c2d5155b5fdc3fb.tar.gz
-Summary  : A deep learning framework made with expression, speed, and modularity in mind (cpu only)
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause
 Requires: caffe-bin = %{version}-%{release}
@@ -16,8 +16,10 @@ Requires: caffe-lib = %{version}-%{release}
 Requires: caffe-license = %{version}-%{release}
 Requires: caffe-python = %{version}-%{release}
 Requires: Cython
+Requires: Flask
 Requires: Pillow
 Requires: PyYAML
+Requires: Werkzeug
 Requires: h5py
 Requires: ipython
 Requires: leveldb
@@ -33,9 +35,13 @@ Requires: scikit-image
 Requires: scipy
 Requires: six
 Requires: tornado
+BuildRequires : Cython
+BuildRequires : Flask
+BuildRequires : Pillow
+BuildRequires : PyYAML
+BuildRequires : Werkzeug
 BuildRequires : boost-dev
 BuildRequires : buildreq-cmake
-BuildRequires : deprecated-numpy-legacypython
 BuildRequires : doxygen
 BuildRequires : gflags-dev
 BuildRequires : git
@@ -43,31 +49,36 @@ BuildRequires : glibc-dev
 BuildRequires : glog-dev
 BuildRequires : h5py
 BuildRequires : hdf5-dev
+BuildRequires : ipython
+BuildRequires : leveldb
 BuildRequires : leveldb-dev
 BuildRequires : lmdb-dev
+BuildRequires : matplotlib
+BuildRequires : networkx
 BuildRequires : nose
 BuildRequires : numpy
 BuildRequires : openblas
 BuildRequires : opencv-dev
+BuildRequires : pandas
+BuildRequires : protobuf
 BuildRequires : protobuf-dev
+BuildRequires : python-dateutil
+BuildRequires : python-gflags
 BuildRequires : python3
 BuildRequires : python3-dev
+BuildRequires : scikit-image
 BuildRequires : scipy
+BuildRequires : six
 BuildRequires : snappy-dev
+BuildRequires : tornado
 BuildRequires : zlib-dev
 Patch1: config.patch
 Patch2: py3.patch
 
 %description
----
-name: Finetuning CaffeNet on Flickr Style
-caffemodel: finetune_flickr_style.caffemodel
-caffemodel_url: http://dl.caffe.berkeleyvision.org/finetune_flickr_style.caffemodel
-license: non-commercial
-sha1: b61b5cef7d771b53b0c488e78d35ccadc073e9cf
-caffe_commit: 737ea5e936821b5c69f9c3952d72693ae5843370
-gist_id: 034c6ac3865563b69e60
----
+# Caffe
+[![Build Status](https://travis-ci.org/BVLC/caffe.svg?branch=master)](https://travis-ci.org/BVLC/caffe)
+[![License](https://img.shields.io/badge/license-BSD-blue.svg)](LICENSE)
 
 %package bin
 Summary: bin components for the caffe package.
@@ -144,20 +155,21 @@ python components for the caffe package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1554344292
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1570559143
 mkdir -p clr-build
 pushd clr-build
-export CFLAGS="$CFLAGS -ffast-math -ftree-loop-vectorize "
-export FCFLAGS="$CFLAGS -ffast-math -ftree-loop-vectorize "
-export FFLAGS="$CFLAGS -ffast-math -ftree-loop-vectorize "
-export CXXFLAGS="$CXXFLAGS -ffast-math -ftree-loop-vectorize "
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -ffast-math -fno-lto -ftree-loop-vectorize "
+export FCFLAGS="$CFLAGS -ffast-math -fno-lto -ftree-loop-vectorize "
+export FFLAGS="$CFLAGS -ffast-math -fno-lto -ftree-loop-vectorize "
+export CXXFLAGS="$CXXFLAGS -ffast-math -fno-lto -ftree-loop-vectorize "
 %cmake .. -DUSE_LEVELDB=on -DUSE_OPENCV=off  -DBLAS=open -DBUILD_python=off
-make  %{?_smp_mflags}
+make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1554344292
+export SOURCE_DATE_EPOCH=1570559143
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/caffe
 cp LICENSE %{buildroot}/usr/share/package-licenses/caffe/LICENSE
